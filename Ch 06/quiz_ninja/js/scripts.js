@@ -10,19 +10,25 @@ var quiz = {
 }
 
 //// dom references ////
-var $question = document.getElementById("question");
-var $score = document.getElementById("score");
-var $feedback = document.getElementById("feedback");
+
+// TODO: We can locate elements on our page using the
+// document object's getElementById() function.  We can
+// find elements for $question, $score, and $feedback.
 
 /// view functions ///
 
 function update(element,content,klass) {
-  var p = element.firstChild || document.createElement("p");
-  p.textContent = content;
-  element.appendChild(p);
-  if(klass) {
-    p.className = klass;
-  }
+  // TODO: We can insert content into the HTML document
+  // by adding elements to the DOM.
+
+  // We can look for an existing <p> tag or create a
+  // new one.
+
+  // Once we have a <p> tag, we can update its text
+  // content.
+
+  // We can also change its class attribute if a valid
+  // "klass" value was passed to our update function.
 }
 
 play(quiz);

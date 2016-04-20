@@ -13,7 +13,9 @@ var quiz = {
 var $question = document.getElementById("question");
 var $score = document.getElementById("score");
 var $feedback = document.getElementById("feedback");
-var $start = document.getElementById("start");
+
+// TODO: We can add a $start variable for the start
+// button.
 
 /// view functions ///
 
@@ -27,8 +29,10 @@ function update(element,content,klass) {
 }
 
 // Event listeners
-$start.addEventListener('click', function() { play(quiz) } , false);
-  
+
+// TODO: We can add an event listener to the start button
+// to begin the quiz instead of starting it automatically.
+
 //// function definitions ////
 
 function play(quiz){

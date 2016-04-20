@@ -1,25 +1,20 @@
-var quiz = [
-    ["What is Superman's real name?","Clarke Kent"],
-    ["What is Wonderwoman's real name?","Dianna Prince"],
-    ["What is Batman's real name?","Bruce Wayne"]
-    ];
-   
-var score = 0 // initialize score
+// TODO: We can create a bank of questions and answers using
+// a "quiz" array.
 
-for(var i=0,max=quiz.length;i<max;i++){
-  
-  // get answer from user
-  var answer = prompt(quiz[i][0]); // quiz[i][0] is the ith questions
+var question = "What is Superman's real name?";
 
-  // check if answer is correct
-  if(answer === quiz[i][1]){ // quiz[i][1] is the ith answer
-    alert("Correct!");
-    // increase score by 1
-    score++;
-  } else {
-    alert("Wrong!");
-  }
-}
 
-// Tell user the score
-alert("Game Over, you scored " + score + " points");
+// TODO: We can use a "score" variable to track correct answers.
+
+
+// TODO: We can use a loop to ask each question and check the
+// user's answer.
+
+var answer = prompt(question);
+
+// TODO: We can use an alert to indicate if an answer was correct
+// or incorrect.
+
+
+// TODO: When we're done, we can report the score.
+alert("You answered " + answer);

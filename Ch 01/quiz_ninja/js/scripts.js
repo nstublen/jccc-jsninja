@@ -1,2 +1,1 @@
-// welcome the user
-alert("Welcome to Quiz Ninja!");
+// TODO: Use an alert to welcome the user.
