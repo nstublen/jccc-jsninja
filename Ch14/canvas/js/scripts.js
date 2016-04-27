@@ -6,8 +6,8 @@ context.strokeStyle = "#ccc"; // a gray stroke color
 
 context.lineWidth = 4;
 
-context.fillRect(10,10,100,50);    
-context.strokeRect(10,100,100,50);
+context.fillRect(10, 10, 100, 50);
+context.strokeRect(10, 100, 100, 50);
 
 context.beginPath();
 context.moveTo(130, 50);
