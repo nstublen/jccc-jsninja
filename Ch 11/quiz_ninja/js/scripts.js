@@ -5,9 +5,9 @@
   "description":"How many super heroes can you name?",
   "question":"What is the real name of ",
   "questions": [
-  { "question": "Superman", "answer": "Clarke Kent", "asked": false },
-  { "question": "Batman", "answer": "Bruce Wayne", "asked": false },
-  { "question": "Wonder Woman", "answer": "Dianna Prince", "asked": false }
+  { "question": "Superman", "answer": "Clarke Kent" },
+  { "question": "Batman", "answer": "Bruce Wayne" },
+  { "question": "Wonder Woman", "answer": "Dianna Prince" }
   ]
   }
 
@@ -46,17 +46,8 @@
     
   //// function definitions ////
   
-  function random(a,b,callback) {
-    if(b===undefined) {
-      // if only one argument is supplied, assume the lower limit is 1
-        b = a, a = 1;
-      } 
-    var result = Math.floor((b-a+1) * Math.random()) + a;
-    if(typeof callback === "function") {
-      result = callback(result);
-    }
-    return result;
-  }
+  // TODO: Create a function that will generate a random number
+  // between two values and send it to a callback function.
 
   function play(quiz){
     var score = 0; // initialize score
@@ -80,46 +71,28 @@
     
     function chooseQuestion() {
       console.log("chooseQuestion() invoked");
-      var questions = quiz.questions.filter(function(question){
-        return question.asked === false;
-      });
-      // set the current question
-      question = questions[random(questions.length) - 1];
+
+      // TODO: Filter the quiz.questions array into a new array
+      // that only contains unasked questions.
+
+      // TODO: Pick a random question from the filtered list.
+
       ask(question);
     }
     
     function ask(question) {
       console.log("ask() invoked");
-      // set the question.asked property to true so it's not asked again
-      question.asked = true;
+
+      // TODO: Remember the question so we don't ask it again.
+
       update($question,quiz.question + question.question + "?");
+
       // clear the previous options
       $form.innerHTML = "";
-      // create an array to put the different options in and a button variable
-      var options = [], button;
-      var option1 = chooseOption();
-      options.push(option1.answer);
-      var option2 = chooseOption();
-      options.push(option2.answer);
-      // add the actual answer at a random place in the options array
-      options.splice(random(0,2),0,question.answer);
-      // loop through each option and display it as a button
-      options.forEach(function(name) {
-        button = document.createElement("button");
-        button.value = name;
-        button.textContent = name;
-        $form.appendChild(button);
-      });
-      
-      // choose an option from all the possible answers but without choosing the answer or the same option twice
-      function chooseOption() {
-        var option = quiz.questions[random(quiz.questions.length) - 1];
-        // check to see if the option chosen is the current question or already one of the options, if it is then recursively call this function until it isn't
-        if(option === question || options.indexOf(option.answer) !== -1) {
-          return chooseOption();
-        }
-        return option;
-      }
+
+      // TODO: Generate a randomly ordered list of answers from the
+      // correct answer and two incorrect answers.
+      var options = [];
     }
 
     function check(answer) {

@@ -1,13 +1,13 @@
 var quiz = {
-"name":"Super Hero Name Quiz",
-"description":"How many super heroes can you name?",
-"question":"What is the real name of ",
-"questions": [
-{ "question": "Superman", "answer": "Clarke Kent" },
-{ "question": "Batman", "answer": "Bruce Wayne" },
-{ "question": "Wonder Woman", "answer": "Dianna Prince" }
-]
-}
+  "name":"Super Hero Name Quiz",
+  "description":"How many super heroes can you name?",
+  "question":"What is the real name of ",
+  "questions": [
+    { "question": "Superman", "answer": "Clarke Kent" },
+    { "question": "Batman", "answer": "Bruce Wayne" },
+    { "question": "Wonder Woman", "answer": "Dianna Prince" }
+  ]
+};
 
 //// views ////
 var $question = document.getElementById("question");
@@ -15,7 +15,7 @@ var $score = document.getElementById("score");
 var $feedback = document.getElementById("feedback");
 var $start = document.getElementById("start");
 var $form = document.getElementById("answer");
-var $timer = document.getElementById("timer");
+// TODO: Find the timer element.
 
 /// view functions ///
 
@@ -47,10 +47,13 @@ hide($form);
 function play(quiz){
   var score = 0; // initialize score
   update($score,score);
-  // initialize time and set up an interval that counts down every second
-  var time = 20;
-  update($timer,time);
-  var interval = window.setInterval( countDown , 1000 );
+
+  // TODO: Initialize time to 20 seconds.
+
+  // TODO: Initialize the timer element to display the countdown time.
+
+  // TODO: Set up a one second timer to update the countdown.
+
   // hide button and show form
   hide($start);
   show($form);
@@ -87,24 +90,17 @@ function play(quiz){
     i++;
     chooseQuestion();
   }
-  
-  // this is called every second and decreases the time
-  function countDown() {
-    // decrease time by 1
-    time--;
-    // update the time displayed
-    update($timer,time);
-    // the game is over if the timer has reached 0
-    if(time <= 0) {
-      gameOver();
-    }
-  }
+
+  // TODO: Implement a countdown function to decrement the timer
+  // and updated the timer element.
+  // TODO: End the game if the timer reaches zero.
 
   function gameOver(){
     // inform the player that the game has finished and tell them how many points they have scored
     update($question,"Game Over, you scored " + score + " points");
-    // stop the countdown interval
-    window.clearInterval(interval);
+
+    // TODO: Stop the countdown interval.
+
     hide($form);
     show($start);
   }

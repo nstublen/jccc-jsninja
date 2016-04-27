@@ -1,20 +1,20 @@
 var quiz = {
-"name":"Super Hero Name Quiz",
-"description":"How many super heroes can you name?",
-"question":"What is the real name of ",
-"questions": [
-{ "question": "Superman", "answer": "Clarke Kent" },
-{ "question": "Batman", "answer": "Bruce Wayne" },
-{ "question": "Wonder Woman", "answer": "Dianna Prince" }
-]
-}
+  "name":"Super Hero Name Quiz",
+  "description":"How many super heroes can you name?",
+  "question":"What is the real name of ",
+  "questions": [
+    { "question": "Superman", "answer": "Clarke Kent" },
+    { "question": "Batman", "answer": "Bruce Wayne" },
+    { "question": "Wonder Woman", "answer": "Dianna Prince" }
+  ]
+};
 
 //// views ////
 var $question = document.getElementById("question");
 var $score = document.getElementById("score");
 var $feedback = document.getElementById("feedback");
 var $start = document.getElementById("start");
-var $form = document.getElementById("answer");
+// TODO: Find the "answer" form.
 
 /// view functions ///
 
@@ -38,9 +38,8 @@ function show(element) {
 // Event listeners
 $start.addEventListener('click', function() { play(quiz) } , false);
 
-// hide the form at the start of the game
-hide($form);
-  
+// TODO: hide the form when the app starts
+
 //// function definitions ////
 
 function play(quiz){
@@ -48,12 +47,13 @@ function play(quiz){
   update($score,score);
   // hide button and show form
   hide($start);
-  show($form);
-  // add event listener to form for when it's submitted
-  $form.addEventListener('submit', function(event) { 
-    event.preventDefault();
-    check($form[0].value);
-    }, false);
+
+  // TODO: Show the answer form when the game starts.
+
+  // TODO: Listen to the submit event on the form.
+  // TODO: Avoid actually submitting the form.
+  // TODO: Check the answer provided in the first element of the form.
+
   var i = 0;
   chooseQuestion();
 
@@ -66,8 +66,8 @@ function play(quiz){
   
   function ask(question) {
     update($question,quiz.question + question);
-    $form[0].value = "";
-    $form[0].focus();
+    // TODO: Clear the answer from the first element of the form.
+    // TODO: Set the focus to the first element of the form.
   }
 
   function check(answer) {
@@ -90,7 +90,7 @@ function play(quiz){
   function gameOver(){
     // inform the player that the game has finished and tell them how many points they have scored
     update($question,"Game Over, you scored " + score + " points");
-    hide($form);
+    // TODO: Hide the answer form when the game ends.
     show($start);
   }
 }

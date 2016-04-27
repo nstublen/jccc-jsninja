@@ -39,7 +39,7 @@
   }
 
   // Event listeners
-  $start.addEventListener('click', function() { new Game(test) } , false);
+  $start.addEventListener('click', function() { play(quiz) } , false);
 
   // hide the form at the start of the game
   hide($form);
@@ -58,105 +58,109 @@
     return result;
   }
 
-  function Game(quiz){
-    this.questions = quiz.questions;
-    this.phrase = quiz.question;
-    this.score = 0; // initialize score
-    update($score,this.score);
+  // TODO: Refactor play() into a Game object.
+  function play(quiz){
+    var score = 0; // initialize score
+    update($score,score);
     // initialize time and set up an interval that counts down every second
-    this.time = 20;
-    update($timer,this.time);
-    this.interval = window.setInterval( this.countDown.bind(this) , 1000 );
+    var time = 20;
+    update($timer,time);
+    var interval = window.setInterval( countDown , 1000 );
     // hide button and show form
     hide($start);
     show($form);
     // add event listener to form for when it's submitted
     $form.addEventListener('click', function(event) { 
       event.preventDefault();
-      this.check(event.target.value);
-      }.bind(this), false);
-    this.chooseQuestion();
-  }
-  
-  // Method definitions
-  Game.prototype.chooseQuestion = function() {
-      console.log("chooseQuestion() called");
-      var questions = this.questions.filter(function(question){
+      check(event.target.value);
+      }, false);
+    var question; // current question
+    chooseQuestion();
+
+    // nested functions
+
+    // TODO: Refactor chooseQuestion() into a prototype function.
+    function chooseQuestion() {
+      console.log("chooseQuestion() invoked");
+      var questions = quiz.questions.filter(function(question){
         return question.asked === false;
       });
       // set the current question
-      this.question = questions[random(questions.length) - 1];
-      this.ask(this.question);
+      question = questions[random(questions.length) - 1];
+      ask(question);
     }
-    
-  Game.prototype.ask = function(question) {
-    console.log("ask() called");
-    var quiz = this;
-    // set the question.asked property to true so it's not asked again
-    question.asked = true;
-    update($question,this.phrase + question.question + "?");
-    // clear the previous options
-    $form.innerHTML = "";
-    // create an array to put the different options in and a button variable
-    var options = [], button;
-    var option1 = chooseOption();
-    options.push(option1.answer);
-    var option2 = chooseOption();
-    options.push(option2.answer);
-    // add the actual answer at a random place in the options array
-    options.splice(random(0,2),0,this.question.answer);
-    // loop through each option and display it as a button
-    options.forEach(function(name) {
-      button = document.createElement("button");
-      button.value = name;
-      button.textContent = name;
-      $form.appendChild(button);
-    });
-    
-    // choose an option from all the possible answers but without choosing the answer or the same option twice
-    function chooseOption() {
-      var option = quiz.questions[random(quiz.questions.length) - 1];
-      // check to see if the option chosen is the current question or already one of the options, if it is then recursively call this function until it isn't
-      if(option === question || options.indexOf(option.answer) !== -1) {
-        return chooseOption();
-      }
-      return option;
-    }
-    
-  }
-  
-  Game.prototype.check = function(answer) {
-    console.log("check() called");
-    if(answer === this.question.answer){
-      update($feedback,"Correct!","correct");
-      // increase score by 1
-      this.score++;
-      update($score,this.score)
-    } else {
-      update($feedback,"Wrong!","wrong");
-    }
-    this.chooseQuestion();
-  }
-  
-  Game.prototype.countDown = function() {
-  // this is called every second and decreases the time
-    // decrease time by 1
-    this.time--;
-    // update the time displayed
-    update($timer,this.time);
-    // the game is over if the timer has reached 0
-    if(this.time <= 0) {
-      this.gameOver();
-    }
-  }
 
-  Game.prototype.gameOver = function() {
-    console.log("gameOver() invoked");
-    // inform the player that the game has finished and tell them how many points they have scored
-    update($question,"Game Over, you scored " + this.score + " points");
-    // stop the countdown interval
-    window.clearInterval(this.interval);
-    hide($form);
-    show($start);
+    // TODO: Refactor ask() into a prototype function.
+    function ask(question) {
+      console.log("ask() invoked");
+      // set the question.asked property to true so it's not asked again
+      question.asked = true;
+      update($question,quiz.question + question.question + "?");
+      // clear the previous options
+      $form.innerHTML = "";
+      // create an array to put the different options in and a button variable
+      var options = [], button;
+      var option1 = chooseOption();
+      options.push(option1.answer);
+      var option2 = chooseOption();
+      options.push(option2.answer);
+      // add the actual answer at a random place in the options array
+      options.splice(random(0,2),0,question.answer);
+      // loop through each option and display it as a button
+      options.forEach(function(name) {
+        button = document.createElement("button");
+        button.value = name;
+        button.textContent = name;
+        $form.appendChild(button);
+      });
+
+      // choose an option from all the possible answers but without choosing the answer or the same option twice
+      function chooseOption() {
+        var option = quiz.questions[random(quiz.questions.length) - 1];
+        // check to see if the option chosen is the current question or already one of the options, if it is then recursively call this function until it isn't
+        if(option === question || options.indexOf(option.answer) !== -1) {
+          return chooseOption();
+        }
+        return option;
+      }
+    }
+
+    // TODO: Refactor check() into a prototype function.
+    function check(answer) {
+      console.log("check() invoked");
+      if(answer === question.answer){
+        update($feedback,"Correct!","correct");
+        // increase score by 1
+        score++;
+        update($score,score)
+      } else {
+        update($feedback,"Wrong!","wrong");
+      }
+      chooseQuestion();
+    }
+
+    // TODO: Refactor countDown() into a prototype function.
+    // this is called every second and decreases the time
+    function countDown() {
+      // decrease time by 1
+      time--;
+      // update the time displayed
+      update($timer,time);
+      // the game is over if the timer has reached 0
+      if(time <= 0) {
+        gameOver();
+      }
+    }
+
+    // TODO: Refactor gameOver() into a prototype function.
+    function gameOver(){
+      console.log("gameOver() invoked");
+      // inform the player that the game has finished and tell them how many points they have scored
+      update($question,"Game Over, you scored " + score + " points");
+      // stop the countdown interval
+      window.clearInterval(interval);
+      hide($form);
+      show($start);
+    }
   }
 }())

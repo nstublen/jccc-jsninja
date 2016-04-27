@@ -124,4 +124,4 @@ function test() {
       show($start);
     }
   }
-}())
+}());
