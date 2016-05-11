@@ -23,7 +23,7 @@
     var $start = document.getElementById("start");
     var $form = document.getElementById("answer");
     var $timer = document.getElementById("timer");
-    var $hiScore = document.getElementById("hiScore");
+    // TODO: Find the hiScore element.
 
     /// view functions ///
 
@@ -55,7 +55,8 @@
     function random(a, b, callback) {
         if (b === undefined) {
             // if only one argument is supplied, assume the lower limit is 1
-            b = a, a = 1;
+            b = a;
+            a = 1;
         }
         var result = Math.floor((b - a + 1) * Math.random()) + a;
         if (typeof callback === "function") {
@@ -69,7 +70,7 @@
         this.phrase = quiz.question;
         this.score = 0; // initialize score
         update($score, this.score);
-        update($hiScore, this.hiScore());
+        // TODO: Update the high score using a hiScore() function.
         // initialize time and set up an interval that counts down every second
         this.time = 20;
         update($timer, this.time);
@@ -94,7 +95,7 @@
         // set the current question
         this.question = questions[random(questions.length) - 1];
         this.ask(this.question);
-    }
+    };
 
     Game.prototype.ask = function (question) {
         console.log("ask() called");
@@ -130,7 +131,7 @@
             return option;
         }
 
-    }
+    };
 
     Game.prototype.check = function (answer) {
         console.log("check() called");
@@ -143,7 +144,7 @@
             update($feedback, "Wrong!", "wrong");
         }
         this.chooseQuestion();
-    }
+    };
 
     Game.prototype.countDown = function () {
         // this is called every second and decreases the time
@@ -155,7 +156,7 @@
         if (this.time <= 0) {
             this.gameOver();
         }
-    }
+    };
 
     Game.prototype.gameOver = function () {
         console.log("gameOver() invoked");
@@ -165,17 +166,10 @@
         window.clearInterval(this.interval);
         hide($form);
         show($start);
-    }
+    };
 
-    Game.prototype.hiScore = function () {
-        if (window.localStorage) {
-            // the value held in localStorage is initally null so make it 0
-            var hi = localStorage.getItem("hiScore") || 0;
-            // check if the hi-score has been beaten and display a message if it has
-            if (this.score > hi || hi === 0) {
-                localStorage.setItem("hiScore", this.score);
-            }
-            return localStorage.getItem("hiScore");
-        }
-    }
-}())
+    // TODO: Add a hiScore() function that retrieves the hiScore
+    // from localStorage.  If the current score is greater than
+    // the high score, the current score should become the high
+    // score.
+}());

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     "use strict";
 
     // TODO: Replace the quiz dictionary with an AJAX call to
@@ -44,6 +44,7 @@
     }
 
     // Event listeners
+
     // TODO: Start the game by getting the quiz questions.
     $start.addEventListener('click', function() { new Game(quiz) } , false);
 
