@@ -1,20 +1,20 @@
-(function () {
+(function() {
     "use strict";
 
-    // gets the question JSON file using Ajax
-    function getQuiz() {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status == 200) {
-                var quiz = JSON.parse(xhr.responseText);
-                new Game(quiz);
-            }
-        };
-        xhr.open("GET", "https://s3.amazonaws.com/sitepoint-book-content/jsninja/quiz.json", true);
-        xhr.overrideMimeType("application/json");
-        xhr.send();
-        update($question, "Waiting for questions...");
-    }
+    // TODO: Replace the quiz dictionary with an AJAX call to
+    // https://s3.amazonaws.com/sitepoint-book-content/jsninja/quiz.json
+    // Parse the JSON response and start a new Game.
+
+    var quiz = {
+        "name":"Super Hero Name Quiz",
+        "description":"How many super heroes can you name?",
+        "question":"What is the real name of ",
+        "questions": [
+            { "question": "Superman", "answer": "Clarke Kent", "asked": false },
+            { "question": "Batman", "answer": "Bruce Wayne", "asked": false },
+            { "question": "Wonder Woman", "answer": "Dianna Prince", "asked": false }
+        ]
+    };
 
     //// views ////
     var $question = document.getElementById("question");
@@ -44,7 +44,8 @@
     }
 
     // Event listeners
-    $start.addEventListener('click', getQuiz, false);
+    // TODO: Start the game by getting the quiz questions.
+    $start.addEventListener('click', function() { new Game(quiz) } , false);
 
     // hide the form at the start of the game
     hide($form);
@@ -54,7 +55,8 @@
     function random(a, b, callback) {
         if (b === undefined) {
             // if only one argument is supplied, assume the lower limit is 1
-            b = a, a = 1;
+            b = a;
+            a = 1;
         }
         var result = Math.floor((b - a + 1) * Math.random()) + a;
         if (typeof callback === "function") {
@@ -92,7 +94,7 @@
         // set the current question
         this.question = questions[random(questions.length) - 1];
         this.ask(this.question);
-    }
+    };
 
     Game.prototype.ask = function (question) {
         console.log("ask() called");
@@ -128,7 +130,7 @@
             return option;
         }
 
-    }
+    };
 
     Game.prototype.check = function (answer) {
         console.log("check() called");
@@ -141,7 +143,7 @@
             update($feedback, "Wrong!", "wrong");
         }
         this.chooseQuestion();
-    }
+    };
 
     Game.prototype.countDown = function () {
         // this is called every second and decreases the time
@@ -153,7 +155,7 @@
         if (this.time <= 0) {
             this.gameOver();
         }
-    }
+    };
 
     Game.prototype.gameOver = function () {
         console.log("gameOver() invoked");
@@ -164,4 +166,4 @@
         hide($form);
         show($start);
     }
-}())
+}());
